@@ -12,13 +12,11 @@
 Mover::Mover() {
     // constructor
     float m = ofRandom(1, 2.5);
-    float x = ofRandom(ofGetWindowWidth());
-    float y = ofRandom(ofGetWindowHeight());
     
     color.set(ofRandom(50, 250), ofRandom(50, 250), ofRandom(50, 250), ofRandom(100, 150));
     
     mass = m;
-    vLoc.set(x, y);
+    vLoc.set(0, 0);
     vVel.set(0, 0);
     vAcc.set(0, 0);
     
@@ -42,9 +40,9 @@ void Mover::draw() {
 }
 
 void Mover::checkEdges() {
-    if (vLoc[0] > ofGetWindowWidth()) {
-        vLoc[0] = ofGetWindowWidth();
-        vVel[0] *= -1;
+    if (vLoc.x > ofGetWindowWidth()) {
+        vLoc.x = ofGetWindowWidth();
+        vVel.x *= -1;
         vVel.scale(0);
     } else if (vLoc[0] < 0) {
         vVel[0] *= -1;

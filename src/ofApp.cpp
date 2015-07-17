@@ -1,7 +1,24 @@
 #include "ofApp.h"
 
+ofVec2f getRandomPointInsideCircle(float centerX, float centerY, float radius) {
+    float x = ofRandom(centerX-radius, centerX+radius);
+    float y = ofRandom(centerY-radius, centerY+radius);
+    
+    float dist = ofDist(centerX, centerY, x, y);
+    
+    if (dist > radius) {
+        return getRandomPointInsideCircle(centerX, centerY, radius);
+    } else {
+        return ofVec2f(x, y);
+    }
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
+    for(int i = 0; i < MOVERS; i++){
+        ofVec2f val = getRandomPointInsideCircle(ofGetWidth()/2, ofGetHeight()/2, 200);
+        mover[i].vLoc.set(val);
+    }
     ofSetWindowTitle("PHYSICS!!!");
     ofSetWindowShape(1200, 800);
     ofBackground(10);
@@ -59,7 +76,7 @@ void ofApp::update(){
         // break the loop if all data received by the serial port was already processed or there is an error
         if (c == OF_SERIAL_NO_DATA || c == OF_SERIAL_ERROR || c == 0)
             break;
-        // if a new line symbol is received, set a value to the pinchY slider
+        // if a new line symbol is received, set a value to the arduinoSpeed variable
         // clear the buffer to be ready to receive the next value
         if (c == '\n') {
             arduinoSpeed = ofToFloat(str);
@@ -72,7 +89,6 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
     color.set(255, 0, 0);
     ofSetColor(color);
     //ofCircle(loc[0], loc[1], 60);

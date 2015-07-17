@@ -38,6 +38,7 @@ public:
     
     ofVec2f force;
     ofVec2f attract(Mover m);
+    //ofVec2f getRandomPointInsideCircle(float, float, float);
     float distance;
     float strength;
     
